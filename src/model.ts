@@ -1,4 +1,4 @@
-interface FileTreeNode {
+export interface FileTreeNode {
     name: string;
     inPath: string;
 }
@@ -14,4 +14,8 @@ export interface File extends FileTreeNode {
 
 export function isFile(node: FileTreeNode): node is File {
     return "content" in node;
+}
+
+export function isFolder(node: FileTreeNode): node is Folder {
+    return "children" in node;
 }

@@ -1,0 +1,14 @@
+.FolderItem {
+}
+
+.folderHeader {
+    display: flex;
+}
+
+.folderHeader p {
+    flex-grow: 1;
+}
+
+.folderChildren {
+    margin-left: 1rem;
+}
