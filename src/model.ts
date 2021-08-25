@@ -11,3 +11,7 @@ export interface File extends FileTreeNode {
     content: string;
 }
 
+
+export function isFile(node: FileTreeNode): node is File {
+    return "content" in node;
+}

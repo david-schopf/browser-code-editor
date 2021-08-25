@@ -1,4 +1,4 @@
-import {Folder} from "./model";
+import {File, Folder} from "./model";
 
 export interface FilesState {
     folders: Folder[];
@@ -17,7 +17,34 @@ interface AddFolderAction extends Action {
     }
 }
 
-export type FilesAction = AddFolderAction;
+interface AddFileAction extends Action {
+    name: 'ADD_FILE',
+    payload: {
+        name: string;
+        inPath: string;
+    }
+}
+
+export const getFolderPath = (folder: Folder) => `${folder.inPath}${folder.name}/`;
+
+const addFileToFolder = (file: File, folder: Folder): Folder => {
+    return {
+        ...folder,
+        children: [...folder.children, file]
+    }
+}
+
+const addFileToFileTree = (tree: Folder[], file: File): Folder[] => {
+    return tree.map(folder => {
+        const path = getFolderPath(folder);
+        if (path === file.inPath) {
+            return addFileToFolder(file, folder)
+        }
+        return folder;
+    })
+}
+
+export type FilesAction = AddFolderAction | AddFileAction;
 
 export default function filesReducer(state: FilesState, action: FilesAction): FilesState {
     const newFolder: Folder = {...action.payload, children: []};
@@ -26,6 +53,12 @@ export default function filesReducer(state: FilesState, action: FilesAction): Fi
             return {
                 ...state,
                 folders: [...state.folders, newFolder]
+            }
+        case 'ADD_FILE':
+            const newFile: File = {...action.payload, content: ''}
+            return {
+                ...state,
+                folders: addFileToFileTree(state.folders, newFile)
             }
     }
     return state;

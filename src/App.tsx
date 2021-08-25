@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, {useEffect, useReducer} from 'react';
 import './App.css';
 import MainWindow from './MainWindow/MainWindow';
 import Sidebar from "./Sidebar/Sidebar";
@@ -13,6 +13,11 @@ export const FilesContext = React.createContext<[FilesState, React.Dispatch<File
 function App() {
 
     const [fileStore, dispatch] = useReducer(filesReducer, initialState)
+
+    useEffect(() => {
+        dispatch({name: 'ADD_FOLDER', payload: {name: 'NewFolder', inPath: '/'}})
+        dispatch({name: 'ADD_FILE', payload: {name: 'NewFile', inPath: '/NewFolder/'}})
+    }, []);
 
     return (
         <div className="App">
