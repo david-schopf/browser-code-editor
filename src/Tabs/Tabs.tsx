@@ -9,6 +9,9 @@ interface TabsProps {
 
 export default function Tabs({files, onSelectFile}: TabsProps) {
     return <div className="Tabs">
-        {files.map(file => <div key={getPath(file)} onClick={() => onSelectFile(file)}>{file.name}</div>)}
+        {files.map(file => {
+            const path = getPath(file);
+            return <div key={path} onClick={() => onSelectFile(file)}>{path}</div>;
+        })}
     </div>
 }

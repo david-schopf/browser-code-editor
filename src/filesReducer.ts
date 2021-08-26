@@ -108,6 +108,10 @@ export const dispatchSaveFile = (dispatch: React.Dispatch<FilesAction>) => (file
     }
 })
 
+function uniqueOpenFiles (openFiles: File[], newFile: File): File[] {
+    return [newFile, ...openFiles.filter(file => getPath(file) !== getPath(newFile))];
+}
+
 export default function filesReducer(state: FilesState, action: FilesAction): FilesState {
     switch (action.name) {
         case 'ADD_FOLDER':
@@ -120,15 +124,13 @@ export default function filesReducer(state: FilesState, action: FilesAction): Fi
             return {
                 ...state,
                 tree: addNodeToTree(state.tree, action.payload),
-                // TODO: Prevent duplicated open files
-                openFiles: [...state.openFiles, action.payload],
+                openFiles: uniqueOpenFiles(state.openFiles, action.payload),
                 activeFile: action.payload
             }
         case 'OPEN_FILE': {
             return {
                 ...state,
-                // TODO: Prevent duplicated open files
-                openFiles: [...state.openFiles, action.payload],
+                openFiles: uniqueOpenFiles(state.openFiles, action.payload),
                 activeFile: action.payload
             }
         }
