@@ -120,15 +120,15 @@ export default function filesReducer(state: FilesState, action: FilesAction): Fi
             return {
                 ...state,
                 tree: addNodeToTree(state.tree, action.payload),
-                // Prevent duplicated open files
-                openFiles: Array.from(new Set([...state.openFiles, action.payload])),
+                // TODO: Prevent duplicated open files
+                openFiles: [...state.openFiles, action.payload],
                 activeFile: action.payload
             }
         case 'OPEN_FILE': {
             return {
                 ...state,
-                // Prevent duplicated open files
-                openFiles: Array.from(new Set([...state.openFiles, action.payload])),
+                // TODO: Prevent duplicated open files
+                openFiles: [...state.openFiles, action.payload],
                 activeFile: action.payload
             }
         }

@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, {useEffect, useReducer} from 'react';
 import './App.css';
 import MainWindow from './MainWindow/MainWindow';
 import Sidebar from "./Sidebar/Sidebar";
@@ -9,13 +9,21 @@ import filesReducer, {
     FilesState,
     initialState
 } from "./filesReducer";
+import {loadStateFromLocalStorage, writeStateToLocalStorage} from "./storage";
 
 
 export const FilesContext = React.createContext<[FilesState, React.Dispatch<FilesAction>]>([initialState, () => {}]);
 
+
+
 function App() {
 
-    const [fileStore, dispatch] = useReducer(filesReducer, initialState)
+    const [fileStore, dispatch] = useReducer(filesReducer, initialState, loadStateFromLocalStorage)
+
+    useEffect(() => {
+        // Persist changes in local storage
+        writeStateToLocalStorage(fileStore)
+    }, [fileStore])
 
     const addFolderToPath = (path: string) => (name: string) => dispatchAddFolderInPath(dispatch)(path)(name);
     const addFileToPath = (path: string) => (name: string) => dispatchAddFileInPath(dispatch)(path)(name);
