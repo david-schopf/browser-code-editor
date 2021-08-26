@@ -1,8 +1,9 @@
-import {File, FileTreeNode, Folder, isFile, isFolder} from "./model";
+import {File, FileTreeNode, Folder, isFolder} from "./model";
 import React from "react";
 
 export interface FilesState {
     tree: Folder;
+    fileContent: Map<string, string>
     openFiles: File[];
     activeFile?: File;
 }
@@ -40,12 +41,15 @@ interface SelectFileAction extends Action {
 
 interface SaveFileAction extends Action {
     name: 'SAVE_FILE',
-    payload: File
+    payload: {
+        file: File;
+        content: string;
+    }
 }
 
 export type FilesAction = AddFolderAction | AddFileAction | OpenFileAction | SelectFileAction | SaveFileAction;
 
-export const getPath = (node: FileTreeNode) => node.inPath + node.name
+export const getPath = (node: FileTreeNode) => isFolder(node) ? `${node.inPath + node.name}/` : node.inPath + node.name
 
 const addNodeToFolder = (node: FileTreeNode, folder: Folder): Folder => ({
     ...folder,
@@ -53,7 +57,7 @@ const addNodeToFolder = (node: FileTreeNode, folder: Folder): Folder => ({
 })
 
 // Adds new nodes recursively to the tree
-const addNodeToFileTree = (tree: Folder, nodeToAdd: FileTreeNode): Folder => {
+const addNodeToTree = (tree: Folder, nodeToAdd: FileTreeNode): Folder => {
     // Do not add duplicate names
     if (tree.children.some(node => node.name === nodeToAdd.name)) {
         return tree;
@@ -66,31 +70,15 @@ const addNodeToFileTree = (tree: Folder, nodeToAdd: FileTreeNode): Folder => {
         } else if (nodeToAdd.inPath.startsWith(path) && isFolder(tree)) {
             return ({
                 ...tree,
-                children: tree.children.filter(isFolder).map(child => addNodeToFileTree(child, nodeToAdd))
+                children: tree.children.filter(isFolder).map(child => addNodeToTree(child, nodeToAdd))
             });
         } else return tree;
     }
 }
 
-const updateFileContent = (tree: Folder, file: File): Folder => {
-    return {
-        ...tree,
-        children: tree.children.map(child => {
-            const filePath = getPath(file);
-            if (filePath === getPath(child)) {
-                return file;
-            }
-            if (filePath.startsWith(child.inPath) && isFolder(child)) {
-                 return updateFileContent(child, file)
-            }
-            return child;
-        })
-    }
-}
+const rootNode = {name: '', inPath: '', children: []};
 
-const rootNode = {name: '/', inPath: '', children: []};
-
-export const initialState: FilesState = {tree: rootNode, openFiles: []};
+export const initialState: FilesState = {tree: rootNode, fileContent: new Map<string, string>(), openFiles: []};
 
 export const dispatchAddFolderInPath = (dispatch: React.Dispatch<FilesAction>) => (inPath: string) => (name: string) => dispatch({
     name: 'ADD_FOLDER',
@@ -112,24 +100,29 @@ export const dispatchOpenFile = (dispatch: React.Dispatch<FilesAction>) => (file
     payload: file
 })
 
-export const dispatchSaveFile = (dispatch: React.Dispatch<FilesAction>) => (file: File) => dispatch({
+export const dispatchSaveFile = (dispatch: React.Dispatch<FilesAction>) => (file: File, content: string) => dispatch({
     name: 'SAVE_FILE',
-    payload: file
+    payload: {
+       file,
+        content
+    }
 })
 
 export default function filesReducer(state: FilesState, action: FilesAction): FilesState {
-    const newFolder: Folder = {...action.payload, children: []};
     switch (action.name) {
         case 'ADD_FOLDER':
+            const newFolder: Folder = {...action.payload, children: []};
             return {
                 ...state,
-                tree: addNodeToFileTree(state.tree, newFolder)
+                tree: addNodeToTree(state.tree, newFolder)
             }
         case 'ADD_FILE':
-            const newFile: File = {...action.payload, content: ''}
             return {
                 ...state,
-                tree: addNodeToFileTree(state.tree, newFile)
+                tree: addNodeToTree(state.tree, action.payload),
+                // Prevent duplicated open files
+                openFiles: Array.from(new Set([...state.openFiles, action.payload])),
+                activeFile: action.payload
             }
         case 'OPEN_FILE': {
             return {
@@ -148,7 +141,7 @@ export default function filesReducer(state: FilesState, action: FilesAction): Fi
         case 'SAVE_FILE': {
             return {
                 ...state,
-                tree: updateFileContent(state.tree, action.payload)
+                fileContent: new Map(state.fileContent).set(getPath(action.payload.file), action.payload.content)
             }
         }
     }

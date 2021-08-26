@@ -19,8 +19,8 @@ export default function CreateDialog({title, onCreated, onCancel}: CreateDialogP
             <h1>{title}</h1>
             <input type="text" value={name} onChange={event => setName(event.target.value)}/>
             <div className="actions">
-                <button type="reset" onClick={onCancel}>Cancel</button>
-                <button type="submit" onClick={submitForm}>OK</button>
+                <button type="button" onClick={onCancel}>Cancel</button>
+                <button type="submit">OK</button>
             </div>
         </form>
     </div>

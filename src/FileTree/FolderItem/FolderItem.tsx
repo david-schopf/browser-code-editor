@@ -1,5 +1,5 @@
 import React from "react";
-import {File, Folder, isFile, isFolder} from "../../model";
+import {File, Folder, isFolder} from "../../model";
 import FileItem from "../FileItem/FileItem";
 import {getPath} from "../../filesReducer";
 import './FolderItem.css';
@@ -22,14 +22,13 @@ export default function FolderItem({folder, onCreateFolder, onCreateFile, onClic
         <div className="folderChildren">
             {folder.children
                 .sort((c1, c2) => isFolder(c1) ? -1 : +1)
-                .map(child => isFile(child) ? <FileItem file={child} key={getPath(child)} onClickFile={onClickFile}/> :
-                <FolderItem
+                .map(child => isFolder(child) ? <FolderItem
                     key={getPath(child)}
                     folder={child as Folder}
                     onCreateFolder={onCreateFolder}
                     onCreateFile={onCreateFile}
                     onClickFile={onClickFile}
-                />)}
+                /> : <FileItem file={child} key={getPath(child)} onClickFile={onClickFile}/>)}
         </div>
     </div>
 }
