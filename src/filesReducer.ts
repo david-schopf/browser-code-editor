@@ -41,7 +41,7 @@ const addNodeToFileTree = (tree: Folder, nodeToAdd: FileTreeNode): Folder => {
         return tree;
     } else {
         const path = getPath(tree);
-        // Add new node to the current folder
+            // Add new node to the current folder
         if (path === nodeToAdd.inPath && isFolder(tree)) {
             return addNodeToFolder(nodeToAdd, tree)
             // Add new node to a subfolder because of the matching path
