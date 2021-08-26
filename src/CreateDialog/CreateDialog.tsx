@@ -12,10 +12,8 @@ export default function CreateDialog({title, onCreated, onCancel}: CreateDialogP
 
     const [name, setName] = useState('');
 
-    const submitForm = () => onCreated(name);
-
     return <div className="CreateDialog">
-        <form onSubmit={() => submitForm()}>
+        <form onSubmit={event => name.length > 0 ? onCreated(name) : event.preventDefault()}>
             <h1>{title}</h1>
             <input type="text" value={name} onChange={event => setName(event.target.value)}/>
             <div className="actions">
