@@ -8,16 +8,20 @@ export type CreateDialogProps = {
     onCancel: () => void;
 }
 
-export default function CreateDialog({ title, onCreated, onCancel}: CreateDialogProps) {
+export default function CreateDialog({title, onCreated, onCancel}: CreateDialogProps) {
 
     const [name, setName] = useState('');
 
+    const submitForm = () => onCreated(name);
+
     return <div className="CreateDialog">
-        <h1>{title}</h1>
-        <input type="text" value={name} onChange={event => setName(event.target.value) } />
-        <div className="actions">
-            <button onClick={onCancel}>Cancel</button>
-            <button onClick={() => onCreated(name)}>OK</button>
-        </div>
+        <form onSubmit={() => submitForm()}>
+            <h1>{title}</h1>
+            <input type="text" value={name} onChange={event => setName(event.target.value)}/>
+            <div className="actions">
+                <button type="reset" onClick={onCancel}>Cancel</button>
+                <button type="submit" onClick={submitForm}>OK</button>
+            </div>
+        </form>
     </div>
 }

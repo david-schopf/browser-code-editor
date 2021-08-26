@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import {FilesContext} from "../App";
 import FolderItem from "./FolderItem/FolderItem";
-import {getPath} from "../filesReducer";
+import {dispatchOpenFile, getPath} from "../filesReducer";
 import {isFolder} from "../model";
 
 export type FileTreeProps = {
@@ -11,7 +11,9 @@ export type FileTreeProps = {
 
 export default function FileTree({onCreateFolder, onCreateFile}: FileTreeProps) {
 
-    const [{tree}] = useContext(FilesContext);
+    const [{tree}, dispatch] = useContext(FilesContext);
+
+    const openFile = dispatchOpenFile(dispatch);
 
     return <div className="FileTree">
         <button onClick={() => onCreateFolder(getPath(tree))}>New folder</button>
@@ -23,6 +25,7 @@ export default function FileTree({onCreateFolder, onCreateFile}: FileTreeProps) 
                 onCreateFolder={onCreateFolder}
                 onCreateFile={onCreateFile}
                 folder={folder}
+                onClickFile={openFile}
             />)}
     </div>
 }

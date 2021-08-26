@@ -1,10 +1,11 @@
-import {File, FileTreeNode, Folder, isFolder} from "./model";
+import {File, FileTreeNode, Folder, isFile, isFolder} from "./model";
 import React from "react";
 
 export interface FilesState {
     tree: Folder;
+    openFiles: File[];
+    activeFile?: File;
 }
-
 
 interface Action {
     name: string;
@@ -27,6 +28,23 @@ interface AddFileAction extends Action {
     }
 }
 
+interface OpenFileAction extends Action {
+    name: 'OPEN_FILE',
+    payload: File
+}
+
+interface SelectFileAction extends Action {
+    name: 'SELECT_FILE',
+    payload: File
+}
+
+interface SaveFileAction extends Action {
+    name: 'SAVE_FILE',
+    payload: File
+}
+
+export type FilesAction = AddFolderAction | AddFileAction | OpenFileAction | SelectFileAction | SaveFileAction;
+
 export const getPath = (node: FileTreeNode) => node.inPath + node.name
 
 const addNodeToFolder = (node: FileTreeNode, folder: Folder): Folder => ({
@@ -41,7 +59,7 @@ const addNodeToFileTree = (tree: Folder, nodeToAdd: FileTreeNode): Folder => {
         return tree;
     } else {
         const path = getPath(tree);
-            // Add new node to the current folder
+        // Add new node to the current folder
         if (path === nodeToAdd.inPath && isFolder(tree)) {
             return addNodeToFolder(nodeToAdd, tree)
             // Add new node to a subfolder because of the matching path
@@ -54,9 +72,25 @@ const addNodeToFileTree = (tree: Folder, nodeToAdd: FileTreeNode): Folder => {
     }
 }
 
+const updateFileContent = (tree: Folder, file: File): Folder => {
+    return {
+        ...tree,
+        children: tree.children.map(child => {
+            const filePath = getPath(file);
+            if (filePath === getPath(child)) {
+                return file;
+            }
+            if (filePath.startsWith(child.inPath) && isFolder(child)) {
+                 return updateFileContent(child, file)
+            }
+            return child;
+        })
+    }
+}
+
 const rootNode = {name: '/', inPath: '', children: []};
 
-export const initialState: FilesState = {tree: rootNode};
+export const initialState: FilesState = {tree: rootNode, openFiles: []};
 
 export const dispatchAddFolderInPath = (dispatch: React.Dispatch<FilesAction>) => (inPath: string) => (name: string) => dispatch({
     name: 'ADD_FOLDER',
@@ -68,7 +102,20 @@ export const dispatchAddFileInPath = (dispatch: React.Dispatch<FilesAction>) => 
     payload: {name, inPath}
 })
 
-export type FilesAction = AddFolderAction | AddFileAction;
+export const dispatchSelectFile = (dispatch: React.Dispatch<FilesAction>) => (file: File) => dispatch({
+    name: 'SELECT_FILE',
+    payload: file
+})
+
+export const dispatchOpenFile = (dispatch: React.Dispatch<FilesAction>) => (file: File) => dispatch({
+    name: 'OPEN_FILE',
+    payload: file
+})
+
+export const dispatchSaveFile = (dispatch: React.Dispatch<FilesAction>) => (file: File) => dispatch({
+    name: 'SAVE_FILE',
+    payload: file
+})
 
 export default function filesReducer(state: FilesState, action: FilesAction): FilesState {
     const newFolder: Folder = {...action.payload, children: []};
@@ -84,6 +131,26 @@ export default function filesReducer(state: FilesState, action: FilesAction): Fi
                 ...state,
                 tree: addNodeToFileTree(state.tree, newFile)
             }
+        case 'OPEN_FILE': {
+            return {
+                ...state,
+                // Prevent duplicated open files
+                openFiles: Array.from(new Set([...state.openFiles, action.payload])),
+                activeFile: action.payload
+            }
+        }
+        case 'SELECT_FILE': {
+            return {
+                ...state,
+                activeFile: action.payload
+            }
+        }
+        case 'SAVE_FILE': {
+            return {
+                ...state,
+                tree: updateFileContent(state.tree, action.payload)
+            }
+        }
     }
     return state;
 }

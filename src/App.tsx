@@ -11,13 +11,11 @@ import filesReducer, {
 } from "./filesReducer";
 
 
-export const FilesContext = React.createContext<[FilesState, React.Dispatch<FilesAction>]>([initialState, () => {
-}]);
+export const FilesContext = React.createContext<[FilesState, React.Dispatch<FilesAction>]>([initialState, () => {}]);
 
 function App() {
 
     const [fileStore, dispatch] = useReducer(filesReducer, initialState)
-
 
     const addFolderToPath = (path: string) => (name: string) => dispatchAddFolderInPath(dispatch)(path)(name);
     const addFileToPath = (path: string) => (name: string) => dispatchAddFileInPath(dispatch)(path)(name);
