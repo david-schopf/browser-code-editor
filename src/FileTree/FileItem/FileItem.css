@@ -1,5 +1,6 @@
 .FileItem {
     display: flex;
+    cursor: pointer;
 }
 
 .filename {

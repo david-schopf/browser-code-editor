@@ -1,0 +1,15 @@
+.Tabs {
+    display: flex;
+    cursor: pointer;
+}
+
+.tab {
+    padding: 0.25rem 1rem;
+    border: 1px solid black;
+    margin: 1px;
+}
+
+.active {
+    background: #333333;
+    color: white;
+}

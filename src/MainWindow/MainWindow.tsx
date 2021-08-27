@@ -20,7 +20,7 @@ export default function MainWindow() {
     }, [activeFile, fileContent])
 
     return <main className="MainWindow">
-        <Tabs onSelectFile={selectFile} files={openFiles}/>
+        <Tabs onSelectFile={selectFile} activeFile={activeFile} files={openFiles}/>
         <FileEditor file={activeFile} content={content} onEdit={saveFile}/>
     </main>;
 

@@ -1,5 +1,6 @@
 import React from "react";
 import {File} from "../filesModel";
+import "./FileEditor.css";
 
 interface FileEditorProps {
     file?: File;
