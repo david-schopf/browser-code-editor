@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {FormEvent, useState} from "react";
 import './CreateDialog.css';
 
 
@@ -12,8 +12,15 @@ export default function CreateDialog({title, onCreated, onCancel}: CreateDialogP
 
     const [name, setName] = useState('');
 
+    const onSubmit = (event: FormEvent) => {
+        event.preventDefault();
+        if (name.length > 0) {
+            onCreated(name);
+        }
+    }
+
     return <div className="CreateDialog">
-        <form onSubmit={event => name.length > 0 ? onCreated(name) : event.preventDefault()}>
+        <form onSubmit={onSubmit}>
             <h1>{title}</h1>
             <input type="text" value={name} onChange={event => setName(event.target.value)}/>
             <div className="actions">

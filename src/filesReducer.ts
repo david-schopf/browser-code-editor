@@ -63,10 +63,13 @@ export default function filesReducer(state: FilesState, action: FilesAction): Fi
             // Create new tree without this node and its children
             const tree = removeNodeFromTree(state.tree, action.payload)
 
+            const openFiles = filterNodesAreInTree(tree, state.openFiles);
+            const activeFile = (state.activeFile && filterNodeIsInTree(tree, state.activeFile)) || openFiles[0];
+
             return {
                 ...state,
-                openFiles: filterNodesAreInTree(tree, state.openFiles),
-                activeFile: state.activeFile ? filterNodeIsInTree(tree, state.activeFile) : undefined,
+                openFiles,
+                activeFile,
                 tree,
                 fileContent
             }
