@@ -19,6 +19,8 @@ export default function MainWindow() {
         return '';
     }, [activeFile, fileContent])
 
+    console.log(openFiles);
+
     return <main className="MainWindow">
         <Tabs onSelectFile={selectFile} activeFile={activeFile} files={openFiles}/>
         <FileEditor file={activeFile} content={content} onEdit={saveFile}/>

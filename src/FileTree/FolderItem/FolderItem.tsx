@@ -15,13 +15,13 @@ export type FolderProps = {
 export default function FolderItem({folder, onCreateFolder, onCreateFile, onClickFile, onDelete}: FolderProps) {
 
     return <div key={folder.name} className="FolderItem">
-        <div className="folderHeader">
-            <p>{folder.name}</p>
-            <p onClick={() => onDelete(folder)}>X</p>
+        <div className="header">
+            <div className='name'>{folder.name}</div>
+            <button className='delete' onClick={() => onDelete(folder)}>X</button>
             <button onClick={() => onCreateFolder(getPath(folder))}>DIR</button>
             <button onClick={() => onCreateFile(getPath(folder))}>FILE</button>
         </div>
-        <div className="folderChildren">
+        <div className="children">
             {folder.children
                 .sort((c1, c2) => isFolder(c1) ? -1 : +1)
                 .map(child => isFolder(child) ? <FolderItem

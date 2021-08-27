@@ -42,11 +42,16 @@ export function addFileWithoutDuplicates(openFiles: File[], newFile: File): File
     return openFiles.some(file => isPathEqual(file, newFile)) ? openFiles : [...openFiles, newFile];
 }
 
-export function isPathInTree(tree: FileTreeNode, path: string): boolean {
-    if (getPath(tree) === path) {
-        return true;
-    } else if (isFolder(tree)) {
-        return tree.children.some(child => isPathInTree(child, path))
-    }
-    return false;
+export function getTreePaths(tree: FileTreeNode): string[] {
+    return isFolder(tree) ? [getPath(tree), ...tree.children.flatMap(child => getTreePaths(child))] : [getPath(tree)];
+}
+
+export function filterNodesAreInTree(tree: FileTreeNode, nodes: FileTreeNode[]) {
+    const treePaths = getTreePaths(tree);
+    console.log(treePaths);
+    return nodes.filter(node => treePaths.includes(getPath(node)))
+}
+
+export function filterNodeIsInTree(tree: FileTreeNode, node: FileTreeNode): FileTreeNode| undefined {
+    return filterNodesAreInTree(tree, [node])[0];
 }

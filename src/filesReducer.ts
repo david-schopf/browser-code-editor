@@ -1,5 +1,10 @@
 import {File, Folder} from "./filesModel";
-import {addFileWithoutDuplicates, addNodeToTree, getPath, isPathInTree, removeNodeFromTree} from "./filesFunctions";
+import {
+    addFileWithoutDuplicates,
+    addNodeToTree, filterNodeIsInTree, filterNodesAreInTree,
+    getPath,
+    removeNodeFromTree
+} from "./filesFunctions";
 import {FilesAction} from "./filesActions";
 
 export interface FilesState {
@@ -60,8 +65,8 @@ export default function filesReducer(state: FilesState, action: FilesAction): Fi
 
             return {
                 ...state,
-                openFiles: state.openFiles.filter(file => isPathInTree(tree, getPath(file))),
-                activeFile: state.activeFile && isPathInTree(tree, getPath(state.activeFile)) ? state.activeFile : undefined,
+                openFiles: filterNodesAreInTree(tree, state.openFiles),
+                activeFile: state.activeFile ? filterNodeIsInTree(tree, state.activeFile) : undefined,
                 tree: tree,
                 fileContent: fileContent
             }

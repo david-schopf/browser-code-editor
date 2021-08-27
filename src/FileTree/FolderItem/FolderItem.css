@@ -1,14 +1,18 @@
 .FolderItem {
 }
 
-.folderHeader {
+.header {
     display: flex;
 }
 
-.folderHeader p {
+.header .name {
     flex-grow: 1;
 }
 
-.folderChildren {
+.children {
     margin-left: 1rem;
+}
+
+.delete {
+    cursor: pointer;
 }
