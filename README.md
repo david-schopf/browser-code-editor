@@ -24,3 +24,24 @@ a different file for editing.
 As a user, I’d like to be able to locally persist the folder structure and the file contents, so
 that next time I open the editor application in the same browser on the same machine, I
 can continue where I left off.
+
+
+# How to run the editor app
+
+## Build prod app
+
+`yarn install`
+`yarn build`
+
+### Run prod app
+
+`npx serve -s build`
+
+## Run dev server
+
+`yarn install`
+`yarn start`
+
+## Linting the source
+
+`yarn eslint src `
