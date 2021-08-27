@@ -3,18 +3,16 @@ import './App.css';
 import MainWindow from './MainWindow/MainWindow';
 import Sidebar from "./Sidebar/Sidebar";
 import filesReducer, {
-    dispatchAddFileInPath,
-    dispatchAddFolderInPath,
-    FilesAction,
     FilesState,
     initialState
 } from "./filesReducer";
 import {loadStateFromLocalStorage, writeStateToLocalStorage} from "./storage";
+import {dispatchAddFileInPath, dispatchAddFolderInPath} from "./filesDispatch";
+import {FilesAction} from "./filesActions";
 
 
-export const FilesContext = React.createContext<[FilesState, React.Dispatch<FilesAction>]>([initialState, () => {}]);
-
-
+export const FilesContext = React.createContext<[FilesState, React.Dispatch<FilesAction>]>([initialState, () => {
+}]);
 
 function App() {
 

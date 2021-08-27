@@ -44,7 +44,6 @@ export default function EditableFileTree({addFileToPath, addFolderToPath}: Edita
         const createFolder = createWith(addFolderToPath)
         const createFile = createWith(addFileToPath);
 
-
         return dialog.type === 'FILE' ? <CreateFileDialog onCreated={createFile} onCancel={closeDialog}/> :
             <CreateFolderDialog onCreated={createFolder} onCancel={closeDialog}/>;
     }, [dialog, setDialog, addFileToPath, addFolderToPath])

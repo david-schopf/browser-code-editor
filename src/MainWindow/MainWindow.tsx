@@ -3,7 +3,8 @@ import './MainWindow.css';
 import Tabs from "../Tabs/Tabs";
 import FileEditor from "../FileEditor/FileEditor";
 import {FilesContext} from "../App";
-import {dispatchSaveFile, dispatchSelectFile, getPath} from "../filesReducer";
+import {dispatchSaveFile, dispatchSelectFile} from "../filesDispatch";
+import {getPath} from "../filesFunctions";
 
 export default function MainWindow() {
     const [{openFiles, activeFile, fileContent}, dispatch] = useContext(FilesContext);

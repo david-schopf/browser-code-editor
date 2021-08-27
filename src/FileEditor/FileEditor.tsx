@@ -1,5 +1,5 @@
 import React from "react";
-import {File} from "../model";
+import {File} from "../filesModel";
 
 interface FileEditorProps {
     file?: File;

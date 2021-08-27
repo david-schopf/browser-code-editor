@@ -1,0 +1,7 @@
+.FileItem {
+    display: flex;
+}
+
+.filename {
+    flex-grow: 1;
+}

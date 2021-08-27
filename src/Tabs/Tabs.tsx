@@ -1,6 +1,6 @@
 import React from "react";
-import {getPath} from "../filesReducer";
-import {File} from "../model";
+import {File} from "../filesModel";
+import {getPath} from "../filesFunctions";
 
 interface TabsProps {
     files: File[];

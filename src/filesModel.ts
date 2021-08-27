@@ -10,7 +10,6 @@ export interface Folder extends FileTreeNode {
 export interface File extends FileTreeNode {
 }
 
-
 export function isFolder(node: FileTreeNode): node is Folder {
     return "children" in node;
 }
