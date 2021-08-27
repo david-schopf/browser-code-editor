@@ -1,5 +1,5 @@
 import {File, Folder} from "./filesModel";
-import {addNodeToTree, getPath, isPathEqual, isPathInTree, removeNodeFromTree, uniqueOpenFiles} from "./filesFunctions";
+import {addFileWithoutDuplicates, addNodeToTree, getPath, isPathInTree, removeNodeFromTree} from "./filesFunctions";
 import {FilesAction} from "./filesActions";
 
 export interface FilesState {
@@ -25,13 +25,13 @@ export default function filesReducer(state: FilesState, action: FilesAction): Fi
             return {
                 ...state,
                 tree: addNodeToTree(state.tree, action.payload),
-                openFiles: uniqueOpenFiles(state.openFiles, action.payload),
+                openFiles: addFileWithoutDuplicates(state.openFiles, action.payload),
                 activeFile: action.payload
             }
         case 'OPEN_FILE': {
             return {
                 ...state,
-                openFiles: uniqueOpenFiles(state.openFiles, action.payload),
+                openFiles: addFileWithoutDuplicates(state.openFiles, action.payload),
                 activeFile: action.payload
             }
         }

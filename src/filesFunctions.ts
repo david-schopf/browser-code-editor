@@ -38,8 +38,8 @@ export const removeNodeFromTree = (tree: Folder, nodeToRemove: FileTreeNode): Fo
     });
 }
 
-export function uniqueOpenFiles(openFiles: File[], newFile: File): File[] {
-    return [newFile, ...openFiles.filter(file => !isPathEqual(file, newFile))];
+export function addFileWithoutDuplicates(openFiles: File[], newFile: File): File[] {
+    return openFiles.some(file => isPathEqual(file, newFile)) ? openFiles : [...openFiles, newFile];
 }
 
 export function isPathInTree(tree: FileTreeNode, path: string): boolean {
