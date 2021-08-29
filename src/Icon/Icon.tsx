@@ -10,9 +10,11 @@ export type IconProps = {
     iconFile: string;
 }
 
-const Icon: React.FC<IconProps> = ({iconFile})=> <div className="Icon">
-    <img src={iconFile} alt="Icon"/>
-</div>;
+function Icon({iconFile}: IconProps) {
+    return <div className="Icon">
+        <img src={iconFile} alt="Icon"/>
+    </div>
+}
 
 export function IconCreateFile() {
     return <Icon iconFile={fileCreateIcon}/>

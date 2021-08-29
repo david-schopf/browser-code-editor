@@ -3,7 +3,7 @@ import {File, Folder, isFolder} from "../../filesModel";
 import FileItem from "../FileItem/FileItem";
 import './FolderItem.css';
 import {getPath} from "../../filesFunctions";
-import {IconCreateFile, IconCreateFolder, IconDelete, IconFolder} from "../Icon";
+import {IconCreateFile, IconCreateFolder, IconDelete, IconFolder} from "../../Icon/Icon";
 
 export type FolderProps = {
     folder: Folder;

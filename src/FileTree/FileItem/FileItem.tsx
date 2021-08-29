@@ -1,7 +1,7 @@
 import React from "react";
 import {File} from "../../filesModel";
 import "./FileItem.css";
-import {IconDelete, IconFile} from "../Icon";
+import {IconDelete, IconFile} from "../../Icon/Icon";
 
 export type FileProps = {
     file: File;
