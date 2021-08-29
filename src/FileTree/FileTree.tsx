@@ -6,6 +6,7 @@ import {isFolder} from "../filesModel";
 import {getPath} from "../filesFunctions";
 import "./FileTree.css";
 import {IconCreateFile, IconCreateFolder} from "./Icon";
+import FileItem from "./FileItem/FileItem";
 
 export type FileTreeProps = {
     onCreateFile: (path: string) => void;
@@ -22,20 +23,22 @@ export default function FileTree({onCreateFolder, onCreateFile}: FileTreeProps) 
     return <div className="FileTree">
         <div className="treeHeader">
             <h1>Files</h1>
-            <button onClick={() => onCreateFolder(getPath(tree))}><IconCreateFolder /></button>
+            <button onClick={() => onCreateFolder(getPath(tree))}><IconCreateFolder/></button>
+            <button onClick={() => onCreateFile(getPath(tree))}><IconCreateFile/></button>
         </div>
         <div className="treeChildren">
-        {tree.children
-            .filter(isFolder)
-            .map(folder =>
-            <FolderItem
-                key={getPath(folder)}
-                onCreateFolder={onCreateFolder}
-                onCreateFile={onCreateFile}
-                folder={folder}
-                onClickFile={openFile}
-                onDelete={deleteNode}
-            />)}
+            {tree.children
+                .map(node => isFolder(node) ?
+                    <FolderItem
+                        key={getPath(node)}
+                        onCreateFolder={onCreateFolder}
+                        onCreateFile={onCreateFile}
+                        folder={node}
+                        onClickFile={openFile}
+                        onDelete={deleteNode}
+                    /> :
+                    <FileItem file={node} onClickFile={openFile} onDelete={deleteNode}/>
+                )}
         </div>
     </div>
 }

@@ -6,10 +6,10 @@
 .treeHeader {
     display: flex;
     font-weight: bold;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
-.treeHeader p {
+.treeHeader h1 {
     flex-grow: 1;
 }
 
