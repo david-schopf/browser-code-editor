@@ -1,0 +1,18 @@
+.FileTree {
+
+}
+
+
+.treeHeader {
+    display: flex;
+    font-weight: bold;
+    justify-content: space-between;
+}
+
+.treeHeader p {
+    flex-grow: 1;
+}
+
+.treeChildren div {
+    margin: 0.5rem 0;
+}

@@ -21,13 +21,8 @@ export default function EditableFileTree({addFileToPath, addFolderToPath}: Edita
 
     const [dialog, setDialog] = useState<DialogState>({isOpen: true});
 
-    const openCreateFolderDialog = (path: string) => {
-        setDialog({isOpen: true, type: 'FOLDER', inPath: path})
-    };
-
-    const openCreateFileDialog = (path: string) => {
-        setDialog({isOpen: true, type: 'FILE', inPath: path})
-    };
+    const openCreateFolderDialog = (path: string) => setDialog({isOpen: true, type: 'FOLDER', inPath: path});
+    const openCreateFileDialog = (path: string) => setDialog({isOpen: true, type: 'FILE', inPath: path});
 
     const CreateDialog = useMemo(() => {
         if (!dialog.inPath || !dialog.type) {

@@ -10,7 +10,7 @@ interface FileEditorProps {
 
 export default function FileEditor({file, content, onEdit}: FileEditorProps) {
     if (!file) {
-        return <div>No file</div>
+        return <div className="noFileMessage">Create folders and files to start</div>
     }
 
     return <div className="FileEditor">

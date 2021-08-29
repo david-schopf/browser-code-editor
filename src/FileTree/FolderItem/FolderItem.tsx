@@ -3,6 +3,7 @@ import {File, Folder, isFolder} from "../../filesModel";
 import FileItem from "../FileItem/FileItem";
 import './FolderItem.css';
 import {getPath} from "../../filesFunctions";
+import {IconCreateFile, IconCreateFolder, IconDelete, IconFolder} from "../Icon";
 
 export type FolderProps = {
     folder: Folder;
@@ -16,10 +17,10 @@ export default function FolderItem({folder, onCreateFolder, onCreateFile, onClic
 
     return <div key={folder.name} className="FolderItem">
         <div className="header">
-            <div className='name'>{folder.name}</div>
-            <button className='delete' onClick={() => onDelete(folder)}>X</button>
-            <button onClick={() => onCreateFolder(getPath(folder))}>DIR</button>
-            <button onClick={() => onCreateFile(getPath(folder))}>FILE</button>
+            <div className='name'><IconFolder /> {folder.name}</div>
+            <button className='delete' onClick={() => onDelete(folder)}><IconDelete /></button>
+            <button onClick={() => onCreateFolder(getPath(folder))}><IconCreateFolder /></button>
+            <button onClick={() => onCreateFile(getPath(folder))}><IconCreateFile /></button>
         </div>
         <div className="children">
             {folder.children

@@ -4,6 +4,8 @@ import FolderItem from "./FolderItem/FolderItem";
 import {dispatchDeleteNode, dispatchOpenFile} from "../filesDispatch";
 import {isFolder} from "../filesModel";
 import {getPath} from "../filesFunctions";
+import "./FileTree.css";
+import {IconCreateFile, IconCreateFolder} from "./Icon";
 
 export type FileTreeProps = {
     onCreateFile: (path: string) => void;
@@ -18,7 +20,11 @@ export default function FileTree({onCreateFolder, onCreateFile}: FileTreeProps) 
     const deleteNode = dispatchDeleteNode(dispatch)
 
     return <div className="FileTree">
-        <button onClick={() => onCreateFolder(getPath(tree))}>New folder</button>
+        <div className="treeHeader">
+            <h1>Files</h1>
+            <button onClick={() => onCreateFolder(getPath(tree))}><IconCreateFolder /></button>
+        </div>
+        <div className="treeChildren">
         {tree.children
             .filter(isFolder)
             .map(folder =>
@@ -30,5 +36,6 @@ export default function FileTree({onCreateFolder, onCreateFile}: FileTreeProps) 
                 onClickFile={openFile}
                 onDelete={deleteNode}
             />)}
+        </div>
     </div>
 }

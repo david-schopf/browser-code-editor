@@ -1,6 +1,9 @@
 import {File, FileTreeNode, Folder, isFolder} from "./filesModel";
 
+/* Get the path of this node */
 export const getPath = (node: FileTreeNode) => isFolder(node) ? `${node.inPath + node.name}/` : node.inPath + node.name
+
+/** Add a node to a folder */
 const addNodeToFolder = (node: FileTreeNode, folder: Folder): Folder => ({
     ...folder,
     children: [...folder.children, node]

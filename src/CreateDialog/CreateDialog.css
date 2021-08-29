@@ -1,9 +1,22 @@
 .CreateDialog {
+    width: 30rem;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50% -50%);
+    transform: translate(-50%, -50%);
     background: white;
     border: 1px solid black;
     padding: 1rem;
+    z-index: 500;
+}
+
+.actions button {
+    border: 1px solid black;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+}
+
+.textInput {
+    margin: 0.5rem 0;
+    width: 100%;
 }

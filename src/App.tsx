@@ -2,10 +2,7 @@ import React, {useEffect, useReducer} from 'react';
 import './App.css';
 import MainWindow from './MainWindow/MainWindow';
 import Sidebar from "./Sidebar/Sidebar";
-import filesReducer, {
-    FilesState,
-    initialState
-} from "./filesReducer";
+import filesReducer, {FilesState, initialState} from "./filesReducer";
 import {loadStateFromLocalStorage, writeStateToLocalStorage} from "./storage";
 import {dispatchAddFileInPath, dispatchAddFolderInPath} from "./filesDispatch";
 import {FilesAction} from "./filesActions";

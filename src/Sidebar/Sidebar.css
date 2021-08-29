@@ -1,3 +1,5 @@
 .Sidebar {
     width: 20%;
+    padding: 1rem;
+    border-right: 1px solid #333333;
 }
