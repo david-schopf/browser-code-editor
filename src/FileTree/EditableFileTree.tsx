@@ -47,6 +47,6 @@ export default function EditableFileTree({addFileToPath, addFolderToPath}: Edita
         {
             dialog.isOpen && CreateDialog
         }
-        <FileTree onCreateFile={openCreateFileDialog} onCreateFolder={openCreateFolderDialog}/>
+        <FileTree onCreateFile={openCreateFileDialog} onCreateFolder={openCreateFolderDialog} />
     </>
 }

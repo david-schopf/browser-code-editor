@@ -1,14 +1,20 @@
 .FolderItem {
+    padding-bottom: 1rem;
 }
 
 .header {
     display: flex;
+    margin-bottom: 1rem;
 }
 
 .header .name {
     flex-grow: 1;
     display: flex;
     align-items: center;
+}
+
+.header .name div {
+    margin-left: 0.5rem;
 }
 
 .children {

@@ -12,11 +12,9 @@ export default function MainWindow() {
     const selectFile = dispatchSelectFile(dispatch)
     const saveFile = dispatchSaveFile(dispatch)
 
+    // Get content of currently active file
     const content = useMemo(() => {
-        if (activeFile && fileContent) {
-                return fileContent.get(getPath(activeFile)) || '';
-        }
-        return '';
+        return (activeFile && fileContent && fileContent.get(getPath(activeFile))) || '';
     }, [activeFile, fileContent])
 
     return <main className="MainWindow">

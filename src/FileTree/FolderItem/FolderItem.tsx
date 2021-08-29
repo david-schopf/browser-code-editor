@@ -11,16 +11,18 @@ export type FolderProps = {
     onCreateFile: (path: string) => void;
     onClickFile: (file: File) => void;
     onDelete: (file: File) => void;
+    isRoot: boolean;
 }
 
-export default function FolderItem({folder, onCreateFolder, onCreateFile, onClickFile, onDelete}: FolderProps) {
-
+export default function FolderItem({folder, onCreateFolder, onCreateFile, onClickFile, onDelete, isRoot}: FolderProps) {
     return <div key={folder.name} className="FolderItem">
         <div className="header">
-            <div className='name'><IconFolder /> {folder.name}</div>
-            <button className='delete' onClick={() => onDelete(folder)}><IconDelete /></button>
-            <button onClick={() => onCreateFolder(getPath(folder))}><IconCreateFolder /></button>
-            <button onClick={() => onCreateFile(getPath(folder))}><IconCreateFile /></button>
+            <div className='name'>
+                {isRoot ? <h1>Files</h1> : <><IconFolder/><div>{folder.name}</div></>}
+            </div>
+            {!isRoot && <button className='delete' onClick={() => onDelete(folder)}><IconDelete/></button>}
+            <button onClick={() => onCreateFolder(getPath(folder))}><IconCreateFolder/></button>
+            <button onClick={() => onCreateFile(getPath(folder))}><IconCreateFile/></button>
         </div>
         <div className="children">
             {folder.children
@@ -32,6 +34,7 @@ export default function FolderItem({folder, onCreateFolder, onCreateFile, onClic
                     onCreateFile={onCreateFile}
                     onClickFile={onClickFile}
                     onDelete={onDelete}
+                    isRoot={false}
                 /> : <FileItem file={child} key={getPath(child)} onClickFile={onClickFile} onDelete={onDelete}/>)}
         </div>
     </div>
