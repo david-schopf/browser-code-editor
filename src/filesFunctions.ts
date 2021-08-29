@@ -28,7 +28,7 @@ export const addNodeToTree = (tree: Folder, nodeToAdd: FileTreeNode): Folder => 
         } else if (nodeToAdd.inPath.startsWith(path) && isFolder(tree)) {
             return ({
                 ...tree,
-                children: tree.children.filter(isFolder).map(child => addNodeToTree(child, nodeToAdd))
+                children: tree.children.map(child => isFolder(child) ? addNodeToTree(child, nodeToAdd): child)
             });
         } else return tree;
     }
