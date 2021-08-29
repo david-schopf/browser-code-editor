@@ -45,3 +45,7 @@ can continue where I left off.
 ## Linting the source
 
 `yarn eslint src `
+
+## Running the tests
+
+`yarn test`

@@ -13,10 +13,10 @@ export default function Tabs({files, onSelectFile, activeFile}: TabsProps) {
 
     const getClass = (file: File) => activeFile && isPathEqual(file, activeFile) ? "tab active" : "tab";
 
-    return <div className="Tabs">
+    return <div className="Tabs" role="tablist">
         {files.map(file => {
             const path = getPath(file);
-            return <div key={path} className={getClass(file)} onClick={() => onSelectFile(file)}>{path}</div>;
+            return <div key={path} className={getClass(file)} onClick={() => onSelectFile(file)} role="tab">{path}</div>;
         })}
     </div>
 }

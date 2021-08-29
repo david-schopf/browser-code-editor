@@ -13,6 +13,7 @@ export const FilesContext = React.createContext<[FilesState, React.Dispatch<File
 
 function App() {
 
+    // Load initial state from local storage
     const [fileStore, dispatch] = useReducer(filesReducer, initialState, loadStateFromLocalStorage)
 
     useEffect(() => {

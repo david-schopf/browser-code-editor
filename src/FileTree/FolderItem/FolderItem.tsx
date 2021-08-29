@@ -15,14 +15,14 @@ export type FolderProps = {
 }
 
 export default function FolderItem({folder, onCreateFolder, onCreateFile, onClickFile, onDelete, isRoot}: FolderProps) {
-    return <div key={folder.name} className="FolderItem">
+    return <div key={folder.name} className="FolderItem" role={isRoot ? "tree" : "treeitem"}>
         <div className="header">
             <div className='name'>
                 {isRoot ? <h1>Files</h1> : <><IconFolder/><div>{folder.name}</div></>}
             </div>
-            <button onClick={() => onCreateFolder(getPath(folder))}><IconCreateFolder/></button>
-            <button onClick={() => onCreateFile(getPath(folder))}><IconCreateFile/></button>
-            {!isRoot && <button onClick={() => onDelete(folder)}><IconDelete/></button>}
+            <button aria-label="Create folder" onClick={() => onCreateFolder(getPath(folder))}><IconCreateFolder/></button>
+            <button aria-label="Create file"onClick={() => onCreateFile(getPath(folder))}><IconCreateFile/></button>
+            {!isRoot && <button aria-label="Delete folder" onClick={() => onDelete(folder)}><IconDelete/></button>}
         </div>
         <div className="children">
             {folder.children

@@ -8,7 +8,7 @@ export type SidebarProps = {
 }
 
 export default function Sidebar({addFolderToPath, addFileToPath}: SidebarProps) {
-    return <aside className="Sidebar">
+    return <aside className="Sidebar" role="navigation">
         <EditableFileTree addFolderToPath={addFolderToPath} addFileToPath={addFileToPath}/>
     </aside>
 }
