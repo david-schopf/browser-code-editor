@@ -5,6 +5,7 @@
 .header {
     display: flex;
     margin-bottom: 1rem;
+    justify-content: space-between;
 }
 
 .header .name {
@@ -19,8 +20,4 @@
 
 .children {
     padding-left: 1rem;
-}
-
-.delete {
-    cursor: pointer;
 }

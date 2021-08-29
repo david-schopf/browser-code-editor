@@ -11,7 +11,7 @@ export type FileProps = {
 
 export default function FileItem({ file, onClickFile, onDelete } : FileProps) {
     return <div className="FileItem" key={file.name} >
-        <div className="filename" onClick={() => onClickFile(file)}><IconFile /> {file.name}</div>
-        <div onClick={() => onDelete(file)}><IconDelete /></div>
+        <div className="filename" onClick={() => onClickFile(file)}><IconFile /> <div>{file.name}</div></div>
+        <button onClick={() => onDelete(file)}><IconDelete/></button>
     </div>
 }

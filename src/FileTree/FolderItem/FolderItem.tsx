@@ -20,9 +20,9 @@ export default function FolderItem({folder, onCreateFolder, onCreateFile, onClic
             <div className='name'>
                 {isRoot ? <h1>Files</h1> : <><IconFolder/><div>{folder.name}</div></>}
             </div>
-            {!isRoot && <button className='delete' onClick={() => onDelete(folder)}><IconDelete/></button>}
             <button onClick={() => onCreateFolder(getPath(folder))}><IconCreateFolder/></button>
             <button onClick={() => onCreateFile(getPath(folder))}><IconCreateFile/></button>
+            {!isRoot && <button onClick={() => onDelete(folder)}><IconDelete/></button>}
         </div>
         <div className="children">
             {folder.children

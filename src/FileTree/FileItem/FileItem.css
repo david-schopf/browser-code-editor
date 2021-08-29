@@ -1,10 +1,15 @@
 .FileItem {
     display: flex;
     cursor: pointer;
+    justify-content: space-between;
 }
 
 .filename {
     flex-grow: 1;
     display: flex;
     align-items: center;
+}
+
+.filename div {
+    margin-left: 0.5rem;
 }
